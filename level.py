@@ -1,5 +1,6 @@
 from pygame.draw import polygon, line
 from cPickle import dump, load
+from math import sqrt
 
 TOLERANCE = 4   #px
 
@@ -106,4 +107,27 @@ class Level:
             self.del_vertex( uv )
 
     def get_firing_position_near( self, x, y ):
-        return 300, 300
+        for p in self.polys:
+            last = p[-1]
+            qx, qy = self.verts[last]
+            for v in p:
+                px, py = self.verts[v]
+                dx, dy = normalize( (qx - px, qy - py) )
+                z = -( dx * px + dy * py )
+                if abs(dot( (x,y), (dx,dy) ) + z) < 20:
+                    return px, py
+                #
+                last = v
+                qx, qy = px, py
+
+        return 0, 0
+
+def normalize( p ):
+    x,y = p
+    d = sqrt(x * x + y * y)
+    return x / d, y / d
+
+def dot( p, q ):
+    x,y = p
+    u,v = q
+    return x * u + y * v
