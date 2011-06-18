@@ -17,10 +17,14 @@ def main():
     text = font.render("Edit Mode", 1, (255,255,255))
 
     level = Level()
-    group1 = [ Dude( 250, 250, 0 ), Dude( 275, 250, 0 ), Dude( 250, 275, 0 ), Dude( 275, 275, 0 ) ]
-    group2 = [ Dude( 500, 250, 0 ), Dude( 525, 250, 0 ), Dude( 500, 275, 0 ), Dude( 525, 275, 0 ) ]
+    groups = [
+        [   Dude( 250, 250, 0 ), Dude( 275, 250, 0 ),
+            Dude( 250, 275, 0 ), Dude( 275, 275, 0 ) ],
+        [   Dude( 500, 250, 0 ), Dude( 525, 250, 0 ),
+            Dude( 500, 275, 0 ), Dude( 525, 275, 0 ) ]
+    ]
 
-    selectedGroup = group1
+    selectedGroup = 0
 
     while True:
         for event in pygame.event.get():
@@ -30,10 +34,10 @@ def main():
                 if event.key == K_e:
                     edit_mode = not edit_mode
                 elif event.key == K_TAB:
-                    if selectedGroup == group1:
-                        selectedGroup = group2
+                    if selectedGroup == len(groups) - 1:
+                        selectedGroup = 0
                     else:
-                        selectedGroup = group1
+                        selectedGroup = selectedGroup + 1
 
         screen.fill( background_color )
         if edit_mode:
@@ -41,16 +45,12 @@ def main():
 
         # draw
         level.draw( screen )
-        for dude in group1:
-            sel_level = 0
-            if selectedGroup == group1:
-                sel_level = 2
-            dude.draw( screen, 0.3, sel_level )
-        for dude in group2:
-            sel_level = 0
-            if selectedGroup == group2:
-                sel_level = 2
-            dude.draw( screen, 0.3, sel_level ) 
+        for index,group in enumerate(groups):
+            for dude in group:
+                sel_level = 0
+                if selectedGroup == index:
+                    sel_level = 2
+                dude.draw( screen, 0.3, sel_level )
 
         pygame.display.flip()
 
