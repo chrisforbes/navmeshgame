@@ -81,6 +81,10 @@ class Level:
         self.dirty = True
 
     def new_poly( self, v ):
-        self.polys.append( [v] );
+        self.polys.append( [v] )
         self.dirty = True
         return len(self.polys) - 1
+
+    def add_to_poly( self, p, v ):
+        self.polys[p].append(v)
+        self.dirty = True
