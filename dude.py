@@ -3,6 +3,7 @@ from pygame.draw import circle, line
 
 dude_types = [ 
     [ (160, 0, 0), (110, 60, 60), (140, 40, 40) ],
+    [ (0, 160, 0), (60, 90, 60), (40, 110, 40) ],
 ]
 
 class Dude:
