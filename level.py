@@ -124,7 +124,8 @@ class Level:
                     d = length( (qx - px, qy - py) )
                     t = dot( ((x - px)/d, (y - py)/d), (-dy, dx) )
                     if t >= 0 and t <= 1:
-                        return px + t * (qx - px), py + t * (qy - py)
+                        return (px + t * (qx - px) + 15 * dx,
+                            py + t * (qy - py) + 15 * dy)
                 #
                 last = v
                 qx, qy = px, py
