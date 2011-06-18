@@ -96,9 +96,11 @@ def main():
             if v != None:
                 circle( screen, (0,0,255), level.verts[v], 4, 0 )
         else:
-            fx, fy = level.get_firing_position_near( mx, my )
-            fx, fy = int(fx), int(fy)
-            circle( screen, (200, 150, 0), (fx, fy), 10, 1 )
+            fp = level.get_firing_position_near( mx, my )
+            if fp != None:
+                fx, fy = fp[ 'pos' ]
+                fx, fy = int(fx), int(fy)
+                circle( screen, (200, 150, 0), (fx, fy), 10, 1 )
 
         pygame.display.flip()
 

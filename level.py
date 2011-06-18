@@ -125,10 +125,15 @@ class Level:
                     k = EDGEFOLLOW_BUFFER / d
                     if t < k: t = k
                     if t > 1 - k: t = 1 - k
-                    return (px + t * (qx - px) + 15 * dx,
-                            py + t * (qy - py) + 15 * dy)
+                    return { 'pos': (px + t * (qx - px) + 15 * dx,
+                                     py + t * (qy - py) + 15 * dy),
+                             't':   t,
+                             'd':   d,
+                             'z':   z,
+                             'tangent': (-dy,dx),
+                             'norm': (dx, dy) }
 
-        return 0, 0
+        return None
 
 def length( p ):
     x,y = p
