@@ -2,7 +2,6 @@ from pygame.draw import polygon
 from cPickle import dump, load
 
 class Level:
-
     def __init__( self ):
         self.verts = [ (200,200), (400,200), (400,400), (200,400) ]
         self.polys = [ [ 0, 1, 2, 3 ] ]
