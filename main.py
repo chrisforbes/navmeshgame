@@ -3,7 +3,7 @@
 import pygame
 from pygame.locals import *
 
-black = 80, 80, 80
+background_color = 80, 80, 80
 
 def main():
 	pygame.init()
@@ -13,7 +13,7 @@ def main():
 		for event in pygame.event.get():
 			if event.type == QUIT:
 				return
-		screen.fill( black )
+		screen.fill( background_color )
 		pygame.display.flip()
 
 if __name__ == '__main__':
