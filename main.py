@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 import pygame
-from pygame.locals import QUIT, KEYDOWN, K_e
+from pygame.locals import QUIT, KEYDOWN, K_e, K_TAB
 from pygame.font import Font
 
 from level import Level
@@ -17,7 +17,10 @@ def main():
     text = font.render("Edit Mode", 1, (255,255,255))
 
     level = Level()
-    dude = Dude( 300, 300, 0 )
+    group1 = [ Dude( 250, 250, 0 ), Dude( 275, 250, 0 ), Dude( 250, 275, 0 ), Dude( 275, 275, 0 ) ]
+    group2 = [ Dude( 500, 250, 0 ), Dude( 525, 250, 0 ), Dude( 500, 275, 0 ), Dude( 525, 275, 0 ) ]
+
+    selectedGroup = group1
 
     while True:
         for event in pygame.event.get():
@@ -26,6 +29,11 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == K_e:
                     edit_mode = not edit_mode
+                elif event.key == K_TAB:
+                    if selectedGroup == group1:
+                        selectedGroup = group2
+                    else:
+                        selectedGroup = group1
 
         screen.fill( background_color )
         if edit_mode:
@@ -33,7 +41,16 @@ def main():
 
         # draw
         level.draw( screen )
-        dude.draw( screen, 0.3, 2 )
+        for dude in group1:
+            sel_level = 0
+            if selectedGroup == group1:
+                sel_level = 2
+            dude.draw( screen, 0.3, sel_level )
+        for dude in group2:
+            sel_level = 0
+            if selectedGroup == group2:
+                sel_level = 2
+            dude.draw( screen, 0.3, sel_level ) 
 
         pygame.display.flip()
 
