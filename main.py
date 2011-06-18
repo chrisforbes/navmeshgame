@@ -12,13 +12,16 @@ from dude import Dude
 background_color = 80, 80, 80
 poly = None
 
+def snap(x):
+    return (x+7) & ~15
+
 def do_edit_action( level, event ):
     global poly
     (x,y) = event.pos
     print event.button
 
     if event.button == 1:
-        v = level.vertex_at( x, y ) or level.new_vertex( x, y )
+        v = level.vertex_at( x, y ) or level.new_vertex( snap(x), snap(y) )
         if poly == None:
             poly = level.new_poly( v )
         elif level.add_to_poly( poly, v ):
