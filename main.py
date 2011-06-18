@@ -8,12 +8,19 @@ from level import Level
 from dude import Dude
 
 background_color = 80, 80, 80
+poly = None
 
 def do_edit_action( level, event ):
     (x,y) = event.pos
-    if event.button == 0:
-        pass
     if event.button == 1:
+        global poly
+        v = level.vertex_at( x, y ) or level.new_vertex( x, y )
+        if poly == None:
+            poly = level.new_poly( v )
+        elif level.add_to_poly( poly, v ):
+            poly = None
+
+    if event.button == 2:
         level.del_vertex( x, y )
 
 def main():
@@ -32,6 +39,7 @@ def main():
     ]
 
     selectedGroup = 0
+    mousepos = (0,0)
 
     while True:
         for event in pygame.event.get():
@@ -47,6 +55,8 @@ def main():
                         selectedGroup = selectedGroup + 1
             if event.type == MOUSEBUTTONDOWN:
                 do_edit_action( level, event )
+            if event.type == MOUSEMOTION:
+                mousepos = event.mouse.pos
 
         screen.fill( background_color )
         if edit_mode:

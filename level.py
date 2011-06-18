@@ -25,7 +25,7 @@ class Level:
 
     def update( self ):
         self.dirty = False
-        self._fill_polys = [[self.verts[x] for x in p] for p in self.polys]     
+        self._fill_polys = [[self.verts[x] for x in p] for p in self.polys if len(p) > 2]     
         
         edges = {}
         for p in self.polys:
@@ -85,8 +85,12 @@ class Level:
         return len(self.polys) - 1
 
     def add_to_poly( self, p, v ):
-        self.polys[p].append(v)
-        self.dirty = True
+        if v in self.polys[p]:
+            return True
+        else:
+            self.polys[p].append(v)
+            self.dirty = True
+            return False
 
     def del_poly( self, p ):
         self.polys[p] = self.polys[-1]
