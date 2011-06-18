@@ -3,6 +3,7 @@ from cPickle import dump, load
 from math import sqrt
 
 TOLERANCE = 4   #px
+EDGEFOLLOW_BUFFER = 16
 
 class Level:
     def __init__( self ):
@@ -124,6 +125,9 @@ class Level:
                     d = length( (qx - px, qy - py) )
                     t = dot( ((x - px)/d, (y - py)/d), (-dy, dx) )
                     if t >= 0 and t <= 1:
+                        k = EDGEFOLLOW_BUFFER / d
+                        if t < k: t = k
+                        if t > 1 - k: t = 1 - k
                         return (px + t * (qx - px) + 15 * dx,
                             py + t * (qy - py) + 15 * dy)
                 #
