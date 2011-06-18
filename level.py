@@ -120,7 +120,7 @@ class Level:
                 
                 dz = dot( (x,y), (dx,dy) ) + z
 
-                if dz < 20 and dz > -20:
+                if dz < 20 and dz > 0:
                     d = length( (qx - px, qy - py) )
                     t = dot( ((x - px)/d, (y - py)/d), (-dy, dx) )
                     if t >= 0 and t <= 1:
