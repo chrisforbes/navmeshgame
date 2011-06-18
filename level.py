@@ -19,7 +19,21 @@ class Level:
 
     def update( self ):
         self.dirty = False
-        self._fill_polys = [[self.verts[x] for x in p] for p in self.polys]
+        self._fill_polys = [[self.verts[x] for x in p] for p in self.polys]     
+        
+        edges = {}
+        for p in self.polys:
+            last = p[-1]
+            for v in p:
+                k = (v,last)
+                if v > last:
+                    k = (last,v)
+                edges[k] = edges.get(k, 0) + 1
+                last = v
+
+        self._internal_edges = [ e for e,count in edges.keys() if count==2 ]
+        self._external_edges = [ e for e,count in edges.keys() if count==1 ]
+        
 
     def save_file(self, filename):
         f = open(filename, 'wb')
