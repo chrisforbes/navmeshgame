@@ -10,9 +10,10 @@ dude_color = 160, 0, 0
 screen = None
 
 def draw_dude(x, y, angle):
+	pointer = (x + 15 * cos(angle), y + 15 * sin(angle))
+	
 	circle( screen, dude_color, (x, y), 10, 1 )
-	line( screen, dude_color, (x, y),
-		(x + 15 * cos(angle), y + 15 * sin(angle)), 1 )
+	line( screen, dude_color, (x, y), pointer, 1 )
 
 def main():
 	pygame.init()
