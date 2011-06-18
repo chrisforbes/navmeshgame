@@ -33,7 +33,7 @@ def main():
 
         # draw
         level.draw( screen )
-        dude.draw( screen, 0.3, True )
+        dude.draw( screen, 0.3, 2 )
 
         pygame.display.flip()
 
