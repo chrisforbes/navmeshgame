@@ -15,42 +15,42 @@ level_verts = [ (200,200), (400,200), (400,400), (200,400) ]
 level_polys = [ [ 0, 1, 2, 3 ] ]
 
 def draw_level():
-	for poly in level_polys:
-		actual_verts = [ level_verts[x] for x in poly ]
-		polygon( screen, walkable_color, actual_verts )
+    for poly in level_polys:
+        actual_verts = [ level_verts[x] for x in poly ]
+        polygon( screen, walkable_color, actual_verts )
 
 def draw_dude(x, y, angle, selected):
-	pointer = (x + 15 * cos(angle), y + 15 * sin(angle))
+    pointer = (x + 15 * cos(angle), y + 15 * sin(angle))
 
-	if selected:
-		circle( screen, highlight_color, (x, y), 10, 3 )
-		line( screen, highlight_color, (x, y), pointer, 3 )
+    if selected:
+        circle( screen, highlight_color, (x, y), 10, 3 )
+        line( screen, highlight_color, (x, y), pointer, 3 )
 
-	circle( screen, dude_color, (x, y), 10, 1 )
-	line( screen, dude_color, (x, y), pointer, 1 )
+    circle( screen, dude_color, (x, y), 10, 1 )
+    line( screen, dude_color, (x, y), pointer, 1 )
 
 def main():
-	pygame.init()
-	global screen
-	screen = pygame.display.set_mode((800, 600))
-	x = 0
+    pygame.init()
+    global screen
+    screen = pygame.display.set_mode((800, 600))
+    x = 0
 
-	while True:
-		for event in pygame.event.get():
-			if event.type == QUIT:
-				return
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                return
 
-		screen.fill( background_color )
+        screen.fill( background_color )
 
-		# animate
-		x = x + 1
-		if x > 100: x = 0
+        # animate
+        x = x + 1
+        if x > 100: x = 0
 
-		# draw
-		draw_level()
-		draw_dude( 300 + x, 300, 0.3, True )
+        # draw
+        draw_level()
+        draw_dude( 300 + x, 300, 0.3, True )
 
-		pygame.display.flip()
+        pygame.display.flip()
 
 if __name__ == '__main__':
-	main()
+    main()
