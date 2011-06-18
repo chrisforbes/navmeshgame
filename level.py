@@ -29,10 +29,12 @@ class Level:
         for p in self.polys:
             last = p[-1]
             for v in p:
-                k = (v,last)
-                if v > last:
-                    k = (last,v)
-                edges[k] = edges.get(k, 0) + 1
+                rk = (v,last)
+                k = (last,v)
+                if rk in edges:
+                    edges[rk] = edges[rk] + 1
+                else:
+                    edges[k] = 1
                 last = v
 
         self._internal_edges = [ e for e,count in edges.items() if count==2 ]
