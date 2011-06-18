@@ -115,15 +115,25 @@ class Level:
             qx, qy = self.verts[last]
             for v in p:
                 px, py = self.verts[v]
-                dx, dy = normalize( (qx - px, qy - py) )
+                dx, dy = normalize( (qy - py, px - qx) )
                 z = -( dx * px + dy * py )
-                if abs(dot( (x,y), (dx,dy) ) + z) < 20:
-                    return px, py
+                
+                dz = dot( (x,y), (dx,dy) ) + z
+
+                if dz < 20 and dz > -20:
+                    d = length( (qx - px, qy - py) )
+                    t = dot( ((x - px)/d, (y - py)/d), (-dy, dx) )
+                    if t >= 0 and t <= 1:
+                        return px + t * (qx - px), py + t * (qy - py)
                 #
                 last = v
                 qx, qy = px, py
 
         return 0, 0
+
+def length( p ):
+    x,y = p
+    return sqrt(x * x + y * y)
 
 def normalize( p ):
     x,y = p
