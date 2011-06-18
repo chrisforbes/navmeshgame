@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 import pygame
-from pygame.locals import QUIT
+from pygame.locals import QUIT, KEYDOWN, K_e
 from pygame.draw import circle, line, polygon
 from math import sin, cos
 
@@ -33,6 +33,7 @@ def draw_dude(x, y, angle, selected):
 def main():
     pygame.init()
     global screen
+    global edit_mode
     screen = pygame.display.set_mode((800, 600))
     x = 0
 
@@ -41,7 +42,7 @@ def main():
             if event.type == QUIT:
                 return
             if event.type == KEYDOWN:
-                if key == K_E:
+                if event.key == K_e:
                     edit_mode = not edit_mode
 
         screen.fill( background_color )
