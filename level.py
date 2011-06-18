@@ -6,9 +6,9 @@ TOLERANCE = 4   #px
 
 class Level:
     def __init__( self ):
-        self.verts = [ (200,200), (400,200), (400,400), 
-                       (200,400), (600,200), (600,400) ]
-        self.polys = [ [ 0, 1, 2, 3 ], [ 1, 4, 5, 2 ] ]
+        self.verts = [ ]
+        self.polys = [ ]
+        self.load_file('level.dat')
 
         # 0 = walkable, 1 = shootable
         self.colors = [ (0, 0, 0), (40, 40, 40), (60, 60, 60) ]
@@ -48,11 +48,14 @@ class Level:
         f = open(filename, 'wb')
         dump((self.verts, self.polys), f)
         f.close()
+        print('Saved %s' % filename)
 
     def load_file(self, filename):
         f = open(filename, 'rb')
         self.verts, self.polys = load(f)
         f.close()
+        self.dirty = True
+        print('Loaded %s' % filename)
 
     def vertex_at( self, x, y ):
         for i,p in enumerate(self.verts):

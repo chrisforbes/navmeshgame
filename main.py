@@ -2,7 +2,7 @@
 
 import pygame
 from pygame.locals import (QUIT, KEYDOWN,
-    MOUSEBUTTONDOWN, MOUSEMOTION, K_e, K_TAB)
+    MOUSEBUTTONDOWN, MOUSEMOTION, K_e, K_TAB, K_s, K_l)
 from pygame.font import Font
 from pygame.draw import circle
 
@@ -66,6 +66,12 @@ def main():
                         selectedGroup = 0
                     else:
                         selectedGroup = selectedGroup + 1
+                elif event.key == K_s and edit_mode:
+                    level.save_file('level.dat')
+                elif event.key == K_l and edit_mode:
+                    global poly
+                    poly = None
+                    level.load_file('level.dat')
             if event.type == MOUSEBUTTONDOWN:
                 if edit_mode:
                     do_edit_action( level, event )
