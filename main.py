@@ -1,8 +1,10 @@
 #!/usr/bin/env python2
 
 import pygame
-from pygame.locals import QUIT, KEYDOWN, MOUSEBUTTONDOWN, K_e, K_TAB
+from pygame.locals import (QUIT, KEYDOWN,
+    MOUSEBUTTONDOWN, MOUSEMOTION, K_e, K_TAB)
 from pygame.font import Font
+from pygame.draw import circle
 
 from level import Level
 from dude import Dude
@@ -39,7 +41,7 @@ def main():
     ]
 
     selectedGroup = 0
-    mousepos = (0,0)
+    mx, my = 0, 0
 
     while True:
         for event in pygame.event.get():
@@ -56,7 +58,7 @@ def main():
             if event.type == MOUSEBUTTONDOWN:
                 do_edit_action( level, event )
             if event.type == MOUSEMOTION:
-                mousepos = event.mouse.pos
+                mx, my = event.pos
 
         screen.fill( background_color )
         if edit_mode:
@@ -70,6 +72,11 @@ def main():
                 if selectedGroup == index:
                     sel_level = 2
                 dude.draw( screen, 0.3, sel_level )
+
+        if edit_mode:
+            v = level.vertex_at( mx, my )
+            if v != None:
+                circle( screen, (0,0,255), level.verts[v], 4, 0 )
 
         pygame.display.flip()
 
