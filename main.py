@@ -17,7 +17,7 @@ def snap(x):
 
 def do_edit_action( level, event ):
     global poly
-    (x,y) = event.pos
+    x, y = event.pos
     print event.button
 
     if event.button == 1:
