@@ -45,10 +45,10 @@ def main():
 
     level = Level()
     groups = [
-        [   Dude( 250, 250, 1 ), Dude( 275, 250, 1 ),
-            Dude( 250, 275, 1 ), Dude( 275, 275, 1 ) ],
-        [   Dude( 500, 250, 0 ), Dude( 525, 250, 0 ),
-            Dude( 500, 275, 0 ), Dude( 525, 275, 0 ) ]
+        { 'dudes': [Dude( 250, 250, 1 ), Dude( 275, 250, 1 ),
+                    Dude( 250, 275, 1 ), Dude( 275, 275, 1 ) ]},
+        { 'dudes': [Dude( 500, 250, 0 ), Dude( 525, 250, 0 ),
+                    Dude( 500, 275, 0 ), Dude( 525, 275, 0 ) ]},
     ]
 
     selectedGroup = 0
@@ -79,7 +79,7 @@ def main():
         # draw
         level.draw( screen, edit_mode )
         for index,group in enumerate(groups):
-            for dude in group:
+            for dude in group['dudes']:
                 sel_level = 0
                 if selectedGroup == index:
                     sel_level = 2
