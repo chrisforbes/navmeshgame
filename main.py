@@ -16,7 +16,7 @@ def main():
     font = Font(None, 24)
     text = font.render("Edit Mode", 1, (255,255,255))
 
-    level = Level( screen )
+    level = Level()
     dude = Dude( 300, 300, 0 )
 
     while True:
@@ -32,7 +32,7 @@ def main():
             screen.blit(text, text.get_rect())
 
         # draw
-        level.draw()
+        level.draw( screen )
         dude.draw( screen, 0.3, True )
 
         pygame.display.flip()
