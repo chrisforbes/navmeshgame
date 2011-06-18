@@ -76,8 +76,10 @@ class Level:
         u = len(self.verts) - 1 
         rep = replacer( u, v ) 
         self.polys = [[rep(x) for x in p if x != v] for p in self.polys]
-        self.polys = [p for p in self.polys if len(p) > 2]
         del self.verts[-1]
+
+        # collect polys which have become degenerate
+        self.polys = [p for p in self.polys if len(p) > 2]
         self.dirty = True
 
     def new_poly( self, v ):
@@ -88,3 +90,18 @@ class Level:
     def add_to_poly( self, p, v ):
         self.polys[p].append(v)
         self.dirty = True
+
+    def del_poly( self, p ):
+        self.polys[p] = self.polys[-1]
+        del self.polys[-1]
+        self.dirty = True
+
+        # collect unreferenced verts
+        vrefs = {}
+        for p in self.polys:
+            for v in p:
+                vrefs[v] = vrefs.get(v, 0) + 1
+        unused_verts = [ v for v in self.verts if vrefs.get(v,0) == 0 ][:]
+        unused_verts.reverse()
+        for uv in unused_verts:
+            self.del_vertex( uv )
