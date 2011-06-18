@@ -111,28 +111,22 @@ class Level:
             self.del_vertex( uv )
 
     def get_firing_position_near( self, x, y ):
-        for p in self.polys:
-            last = p[-1]
-            qx, qy = self.verts[last]
-            for v in p:
-                px, py = self.verts[v]
-                dx, dy = normalize( (qy - py, px - qx) )
-                z = -( dx * px + dy * py )
-                
-                dz = dot( (x,y), (dx,dy) ) + z
+        for q,p in self._external_edges:
+            px, py = self.verts[p]
+            qx, qy = self.verts[q]
+            dx, dy = normalize( (qy - py, px - qx) )
+            z = -( dx * px + dy * py )
+            dz = dot( (x,y), (dx,dy) ) + z
 
-                if dz < 20 and dz > 0:
-                    d = length( (qx - px, qy - py) )
-                    t = dot( ((x - px)/d, (y - py)/d), (-dy, dx) )
-                    if t >= 0 and t <= 1:
-                        k = EDGEFOLLOW_BUFFER / d
-                        if t < k: t = k
-                        if t > 1 - k: t = 1 - k
-                        return (px + t * (qx - px) + 15 * dx,
+            if dz < 20 and dz > 0:
+                d = length( (qx - px, qy - py) )
+                t = dot( ((x - px)/d, (y - py)/d), (-dy, dx) )
+                if t >= 0 and t <= 1:
+                    k = EDGEFOLLOW_BUFFER / d
+                    if t < k: t = k
+                    if t > 1 - k: t = 1 - k
+                    return (px + t * (qx - px) + 15 * dx,
                             py + t * (qy - py) + 15 * dy)
-                #
-                last = v
-                qx, qy = px, py
 
         return 0, 0
 
