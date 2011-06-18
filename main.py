@@ -13,23 +13,25 @@ background_color = 80, 80, 80
 poly = None
 
 def do_edit_action( level, event ):
+    global poly
     (x,y) = event.pos
+    print event.button
+
     if event.button == 1:
-        global poly
         v = level.vertex_at( x, y ) or level.new_vertex( x, y )
         if poly == None:
             poly = level.new_poly( v )
         elif level.add_to_poly( poly, v ):
             poly = None
 
-    if event.button == 2:
+    if event.button == 3:
         if poly != None:
             level.del_poly( poly )
             poly = None
         else:
             v = level.vertex_at( x, y )
             if v != None:
-                level.del_vertex( x, y )
+                level.del_vertex( v )
 
 def main():
     pygame.init()
@@ -62,7 +64,8 @@ def main():
                     else:
                         selectedGroup = selectedGroup + 1
             if event.type == MOUSEBUTTONDOWN:
-                do_edit_action( level, event )
+                if edit_mode:
+                    do_edit_action( level, event )
             if event.type == MOUSEMOTION:
                 mx, my = event.pos
 

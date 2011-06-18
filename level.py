@@ -98,7 +98,8 @@ class Level:
         for p in self.polys:
             for v in p:
                 vrefs[v] = vrefs.get(v, 0) + 1
-        unused_verts = [ v for v in self.verts if vrefs.get(v,0) == 0 ][:]
+        unused_verts = [ i for i,v in enumerate(self.verts)
+            if vrefs.get(i,0) == 0 ][:]
         unused_verts.reverse()
         for uv in unused_verts:
             self.del_vertex( uv )
