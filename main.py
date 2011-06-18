@@ -90,7 +90,7 @@ def main():
                 sel_level = 0
                 if selectedGroup == index:
                     sel_level = 2
-                dude.draw( screen, 0.3, sel_level )
+                dude.draw( screen, sel_level )
 
         if edit_mode:
             v = level.vertex_at( mx, my )
