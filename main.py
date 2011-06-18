@@ -8,6 +8,7 @@ from pygame.draw import circle
 
 from level import Level
 from dude import Dude
+import meshutils
 
 background_color = 80, 80, 80
 poly = None

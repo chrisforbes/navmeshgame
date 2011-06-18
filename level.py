@@ -6,7 +6,6 @@ from pygame.draw import polygon, line
 from cPickle import dump, load
 from vecutils import *
 
-TOLERANCE = 4   #px
 EDGEFOLLOW_BUFFER = 16
 
 class Level:
@@ -61,58 +60,6 @@ class Level:
         f.close()
         self.dirty = True
         print('Loaded %s' % filename)
-
-    def vertex_at( self, x, y ):
-        for i,p in enumerate(self.verts):
-            _x,_y = p
-            if abs( x - _x ) <= TOLERANCE and abs( y - _y ) <= TOLERANCE:
-                return i
-        return None
-
-    def new_vertex( self, x, y ):
-        self.verts.append( (x,y) )
-        self.dirty = True
-        return len(self.verts) - 1
-
-    def del_vertex( self, v ):
-        u = len(self.verts) - 1
-        rep = lambda x: v if x == u else x
-        self.polys = [[rep(x) for x in p if x != v] for p in self.polys]
-        self.verts[v] = self.verts[-1]
-        del self.verts[-1]
-
-        # collect polys which have become degenerate
-        self.polys = [p for p in self.polys if len(p) > 2]
-        self.dirty = True
-
-    def new_poly( self, v ):
-        self.polys.append( [v] )
-        self.dirty = True
-        return len(self.polys) - 1
-
-    def add_to_poly( self, p, v ):
-        if v in self.polys[p]:
-            return True
-        else:
-            self.polys[p].append(v)
-            self.dirty = True
-            return False
-
-    def del_poly( self, p ):
-        self.polys[p] = self.polys[-1]
-        del self.polys[-1]
-        self.dirty = True
-
-        # collect unreferenced verts
-        vrefs = {}
-        for p in self.polys:
-            for v in p:
-                vrefs[v] = vrefs.get(v, 0) + 1
-        unused_verts = [ i for i,v in enumerate(self.verts)
-            if vrefs.get(i,0) == 0 ][:]
-        unused_verts.reverse()
-        for uv in unused_verts:
-            self.del_vertex( uv )
 
     def get_firing_position_near( self, x, y ):
         for q,p in self._external_edges:
