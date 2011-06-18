@@ -10,6 +10,9 @@ dude_color = 160, 0, 0
 highlight_color = 140, 80, 80
 screen = None
 
+level_verts = [ (200,200), (400,200), (400,400), (200,400) ]
+level_polys = [ 0, 1, 2, 3 ]
+
 def draw_dude(x, y, angle, selected):
 	pointer = (x + 15 * cos(angle), y + 15 * sin(angle))
 
