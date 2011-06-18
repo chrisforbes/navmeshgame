@@ -11,7 +11,9 @@ background_color = 80, 80, 80
 
 def do_edit_action( level, event ):
     (x,y) = event.pos
-    if event.button == 2:
+    if event.button == 0:
+        pass
+    if event.button == 1:
         level.del_vertex( x, y )
 
 def main():
