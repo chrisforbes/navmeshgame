@@ -10,6 +10,7 @@ dude_color = 160, 0, 0
 highlight_color = 140, 80, 80
 walkable_color = 0, 0, 0
 screen = None
+edit_mode = False
 
 level_verts = [ (200,200), (400,200), (400,400), (200,400) ]
 level_polys = [ [ 0, 1, 2, 3 ] ]
@@ -39,6 +40,9 @@ def main():
         for event in pygame.event.get():
             if event.type == QUIT:
                 return
+            if event.type == KEYDOWN:
+                if key == K_E:
+                    edit_mode = not edit_mode
 
         screen.fill( background_color )
 
