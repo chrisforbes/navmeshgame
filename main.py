@@ -2,9 +2,10 @@
 
 import pygame
 from pygame.locals import QUIT, KEYDOWN, K_e
-from pygame.draw import circle, line, polygon
+from pygame.draw import circle, line
 from pygame.font import Font
 from math import sin, cos
+from level import Level
 
 background_color = 80, 80, 80
 dude_color = 160, 0, 0
@@ -12,14 +13,6 @@ highlight_color = 140, 80, 80
 walkable_color = 0, 0, 0
 screen = None
 edit_mode = False
-
-level_verts = [ (200,200), (400,200), (400,400), (200,400) ]
-level_polys = [ [ 0, 1, 2, 3 ] ]
-
-def draw_level():
-    for poly in level_polys:
-        actual_verts = [ level_verts[x] for x in poly ]
-        polygon( screen, walkable_color, actual_verts )
 
 def draw_dude(x, y, angle, selected):
     pointer = (x + 15 * cos(angle), y + 15 * sin(angle))
@@ -40,6 +33,8 @@ def main():
     font = Font(None, 24)
     text = font.render("Edit Mode", 1, (255,255,255))
 
+    level = Level( screen )
+
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -57,7 +52,7 @@ def main():
         if x > 100: x = 0
 
         # draw
-        draw_level()
+        level.draw()
         draw_dude( 300 + x, 300, 0.3, True )
 
         pygame.display.flip()
