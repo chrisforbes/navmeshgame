@@ -1,6 +1,10 @@
+"""
+A level; mostly mesh manipulation
+"""
+
 from pygame.draw import polygon, line
 from cPickle import dump, load
-from math import sqrt
+from vecutils import *
 
 TOLERANCE = 4   #px
 EDGEFOLLOW_BUFFER = 16
@@ -134,17 +138,3 @@ class Level:
                              'norm': (dx, dy) }
 
         return None
-
-def length( p ):
-    x,y = p
-    return sqrt(x * x + y * y)
-
-def normalize( p ):
-    x,y = p
-    d = sqrt(x * x + y * y)
-    return x / d, y / d
-
-def dot( p, q ):
-    x,y = p
-    u,v = q
-    return x * u + y * v
