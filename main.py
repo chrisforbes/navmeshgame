@@ -2,7 +2,8 @@
 
 import pygame
 from pygame.locals import (QUIT, KEYDOWN,
-    MOUSEBUTTONDOWN, MOUSEMOTION, K_e, K_TAB, K_s, K_l)
+    MOUSEBUTTONDOWN, MOUSEMOTION,
+    K_e, K_TAB, K_s, K_l, K_a, K_d, K_w)
 from pygame.font import Font
 from pygame.draw import circle
 
@@ -52,9 +53,13 @@ def main():
                     Dude( 500, 275, 0 ), Dude( 525, 275, 0 ) ]},
     ]
 
-    selectedGroup = 0
-    sel_dindex = 0
+    sel_group = 0
+    sel_dude = 0
     mx, my = 0, 0
+
+    def validate_sel_dude(x,z):
+        n = len( groups[ sel_group ][ 'dudes' ] )
+        return x if x < n else z
 
     while True:
         for event in pygame.event.get():
@@ -63,17 +68,29 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == K_e:
                     edit_mode = not edit_mode
+
                 elif event.key == K_TAB:
-                    if selectedGroup == len(groups) - 1:
-                        selectedGroup = 0
-                    else:
-                        selectedGroup = selectedGroup + 1
-                elif event.key == K_s and edit_mode:
-                    level.save_file('level.dat')
-                elif event.key == K_l and edit_mode:
-                    global poly
-                    poly = None
-                    level.load_file('level.dat')
+                    sel_group = (sel_group + 1) % len(groups)
+                    # don't let the dindex point to an invalid dude.
+                    sel_dude = validate_sel_dude( sel_dude, 0 )
+
+                elif edit_mode:
+                    if event.key == K_s:
+                        level.save_file( 'level.dat' )
+                    if event.key == K_l:
+                        global poly
+                        poly = None
+                        level.load_file('level.dat')
+
+                elif event.key == K_w:
+                    sel_dude = validate_sel_dude( 0, sel_dude )
+                elif event.key == K_a:
+                    sel_dude = validate_sel_dude( 1, sel_dude )
+                elif event.key == K_s:
+                    sel_dude = validate_sel_dude( 2, sel_dude )
+                elif event.key == K_d:
+                    sel_dude = validate_sel_dude( 3, sel_dude )
+
             if event.type == MOUSEBUTTONDOWN:
                 if edit_mode:
                     do_edit_action( level, event )
@@ -89,8 +106,8 @@ def main():
         for index,group in enumerate(groups):
             for dindex, dude in enumerate(group['dudes']):
                 sel_level = 0
-                if selectedGroup == index:
-                    sel_level = 2 if dindex == sel_dindex else 1
+                if sel_group == index:
+                    sel_level = 2 if dindex == sel_dude else 1
                 dude.draw( screen, sel_level )
 
         if edit_mode:
