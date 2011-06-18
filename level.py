@@ -104,3 +104,6 @@ class Level:
         unused_verts.reverse()
         for uv in unused_verts:
             self.del_vertex( uv )
+
+    def get_firing_position_near( self, x, y ):
+        return 300, 300

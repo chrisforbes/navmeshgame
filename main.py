@@ -89,6 +89,9 @@ def main():
             v = level.vertex_at( mx, my )
             if v != None:
                 circle( screen, (0,0,255), level.verts[v], 4, 0 )
+        else:
+            fp = level.get_firing_position_near( mx, my )
+            circle( screen, (200, 150, 0), fp, 10, 1 )
 
         pygame.display.flip()
 
