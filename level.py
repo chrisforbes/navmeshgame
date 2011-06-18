@@ -1,6 +1,8 @@
 from pygame.draw import polygon, line
 from cPickle import dump, load
 
+TOLERANCE = 4   #px
+
 class Level:
     def __init__( self ):
         self.verts = [ (200,200), (400,200), (400,400), 
@@ -50,3 +52,9 @@ class Level:
         self.verts, self.polys = load(f)
         f.close()
 
+    def vertex_at( self, x, y ):
+        for i,p in enumerate(self.verts):
+            _x,_y = p
+            if abs( x - _x ) <= TOLERANCE and abs( y - _y ) <= TOLERANCE:
+                return i
+        return None
