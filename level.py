@@ -58,3 +58,8 @@ class Level:
             if abs( x - _x ) <= TOLERANCE and abs( y - _y ) <= TOLERANCE:
                 return i
         return None
+
+    def new_vertex( self, x, y ):
+        self.verts.append( (x,y) )
+        self.dirty = True
+        return len(self.verts) - 1
