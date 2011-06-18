@@ -74,7 +74,7 @@ def main():
             screen.blit(text, text.get_rect())
 
         # draw
-        level.draw( screen )
+        level.draw( screen, edit_mode )
         for index,group in enumerate(groups):
             for dude in group:
                 sel_level = 0

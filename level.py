@@ -13,13 +13,14 @@ class Level:
         self.colors = [ (0, 0, 0), (40, 40, 40), (60, 60, 60) ]
         self.dirty = True
 
-    def draw( self, screen ):
+    def draw( self, screen, debug ):
         if self.dirty:
             self.update()
         for p in self._fill_polys:
             polygon( screen, self.colors[0], p )
-        for v1,v2 in self._internal_edges:
-            line( screen, self.colors[1], self.verts[v1], self.verts[v2] )
+        if debug:
+            for v1,v2 in self._internal_edges:
+                line( screen, self.colors[1], self.verts[v1], self.verts[v2] )
         for v1,v2 in self._external_edges:
             line( screen, self.colors[2], self.verts[v1], self.verts[v2], 3 )
 
