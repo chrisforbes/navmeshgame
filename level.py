@@ -78,5 +78,9 @@ class Level:
         self.polys = [[rep(x) for x in p if x != v] for p in self.polys]
         self.polys = [p for p in self.polys if len(p) > 2]
         del self.verts[-1]
-        
         self.dirty = True
+
+    def new_poly( self, v ):
+        self.polys.append( [v] );
+        self.dirty = True
+        return len(self.polys) - 1
