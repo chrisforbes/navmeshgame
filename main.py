@@ -27,7 +27,9 @@ def do_edit_action( level, event ):
             level.del_poly( poly )
             poly = None
         else:
-            level.del_vertex( x, y )
+            v = level.vertex_at( x, y )
+            if v != None:
+                level.del_vertex( x, y )
 
 def main():
     pygame.init()

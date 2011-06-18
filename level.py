@@ -64,11 +64,7 @@ class Level:
         self.dirty = True
         return len(self.verts) - 1
 
-    def del_vertex( self, x, y ):
-        v = self.vertex_at( x, y )
-        if v == None:
-            return
-
+    def del_vertex( self, v ):
         u = len(self.verts) - 1
         rep = lambda x: v if x == u else x
         self.polys = [[rep(x) for x in p if x != v] for p in self.polys]
