@@ -3,7 +3,7 @@
 import pygame
 from pygame.locals import *
 
-black = 0, 0, 0
+black = 80, 80, 80
 
 def main():
 	pygame.init()
