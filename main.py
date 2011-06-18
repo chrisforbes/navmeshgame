@@ -53,6 +53,7 @@ def main():
     ]
 
     selectedGroup = 0
+    sel_dindex = 0
     mx, my = 0, 0
 
     while True:
@@ -86,10 +87,10 @@ def main():
         # draw
         level.draw( screen, edit_mode )
         for index,group in enumerate(groups):
-            for dude in group['dudes']:
+            for dindex, dude in enumerate(group['dudes']):
                 sel_level = 0
                 if selectedGroup == index:
-                    sel_level = 2
+                    sel_level = 2 if dindex == sel_dindex else 1
                 dude.draw( screen, sel_level )
 
         if edit_mode:
