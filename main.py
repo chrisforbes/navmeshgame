@@ -3,6 +3,7 @@
 import pygame
 from pygame.locals import QUIT, KEYDOWN, K_e
 from pygame.draw import circle, line, polygon
+from pygame.font import Font
 from math import sin, cos
 
 background_color = 80, 80, 80
@@ -36,6 +37,8 @@ def main():
     global edit_mode
     screen = pygame.display.set_mode((800, 600))
     x = 0
+    font = Font(None, 24)
+    text = font.render("Edit Mode", 1, (255,255,255))
 
     while True:
         for event in pygame.event.get():
@@ -46,6 +49,8 @@ def main():
                     edit_mode = not edit_mode
 
         screen.fill( background_color )
+        if edit_mode:
+            screen.blit(text, text.get_rect())
 
         # animate
         x = x + 1
