@@ -3,6 +3,10 @@ from cPickle import dump, load
 
 TOLERANCE = 4   #px
 
+def make_replacer( a, b ):
+    def f(x): return b if a == x else x
+    return f
+
 class Level:
     def __init__( self ):
         self.verts = [ (200,200), (400,200), (400,400), 
@@ -63,3 +67,16 @@ class Level:
         self.verts.append( (x,y) )
         self.dirty = True
         return len(self.verts) - 1
+
+    def del_vertex( self, x, y ):
+        v = self.vertex_at( x, y )
+        if v == None:
+            return
+      
+        u = len(self.verts) - 1 
+        rep = replacer( u, v ) 
+        self.polys = [[rep(x) for x in p if x != v] for p in self.polys]
+        self.polys = [p for p in self.polys if len(p) > 2]
+        del self.verts[-1]
+        
+        self.dirty = True
