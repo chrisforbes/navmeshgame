@@ -40,9 +40,6 @@ class Level:
         self._internal_edges = [ e for e,count in edges.items() if count==2 ]
         self._external_edges = [ e for e,count in edges.items() if count==1 ]
 
-        print self._internal_edges
-        
-
     def save_file(self, filename):
         f = open(filename, 'wb')
         dump((self.verts, self.polys), f)
