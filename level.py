@@ -3,8 +3,10 @@ from cPickle import dump, load
 
 class Level:
     def __init__( self ):
-        self.verts = [ (200,200), (400,200), (400,400), (200,400) ]
-        self.polys = [ [ 0, 1, 2, 3 ] ]
+        self.verts = [ (200,200), (400,200), (400,400), 
+                       (200,400), (600,200), (600,400) ]
+        self.polys = [ [ 0, 1, 2, 3 ], [ 1, 4, 5, 2 ] ]
+
         # 0 = walkable, 1 = shootable
         self.colors = [ (0, 0, 0), (40, 40, 40) ]
         self.dirty = True
