@@ -1,4 +1,4 @@
-from pygame.draw import polygon
+from pygame.draw import polygon, line
 from cPickle import dump, load
 
 class Level:
@@ -16,6 +16,8 @@ class Level:
             self.update()
         for p in self._fill_polys:
             polygon( screen, self.colors[0], p )
+        for v1,v2 in self._internal_edges:
+            line( screen, self.colors[1], self.verts[v1], self.verts[v2] ) 
 
     def update( self ):
         self.dirty = False
@@ -31,8 +33,10 @@ class Level:
                 edges[k] = edges.get(k, 0) + 1
                 last = v
 
-        self._internal_edges = [ e for e,count in edges.keys() if count==2 ]
-        self._external_edges = [ e for e,count in edges.keys() if count==1 ]
+        self._internal_edges = [ e for e,count in edges.items() if count==2 ]
+        self._external_edges = [ e for e,count in edges.items() if count==1 ]
+
+        print self._internal_edges
         
 
     def save_file(self, filename):
