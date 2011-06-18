@@ -2,7 +2,9 @@ from math import sin, cos
 from pygame.draw import circle, line
 
 dude_types = [ 
-    { 'normal_color': (160, 0, 0), 'sel_color': (140, 80, 80) }
+    {   'normal_color': (160, 0, 0), 
+        'sel_color': (140, 40, 40), 
+        'halfsel_color': (100, 80, 80) },
 ]
 
 class Dude:
@@ -17,7 +19,7 @@ class Dude:
 
         if selected:
             sel_color = dude_types[ self.t ][ 'sel_color' ]
-            circle( screen, sel_color, p, 10, 3 )
+            circle( screen, sel_color, p, 10+1, 3 )
             line( screen, sel_color, p, q, 3 )
 
         normal_color = dude_types[ self.t ][ 'normal_color' ]
