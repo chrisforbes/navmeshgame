@@ -1,13 +1,18 @@
 #!/usr/bin/env python2
 
 import pygame
-from pygame.locals import QUIT, KEYDOWN, K_e, K_TAB
+from pygame.locals import QUIT, KEYDOWN, MOUSEBUTTONDOWN, K_e, K_TAB
 from pygame.font import Font
 
 from level import Level
 from dude import Dude
 
 background_color = 80, 80, 80
+
+def do_edit_action( level, event ):
+    (x,y) = event.pos
+    if event.button == 2:
+        level.del_vertex( x, y )
 
 def main():
     pygame.init()
@@ -38,6 +43,8 @@ def main():
                         selectedGroup = 0
                     else:
                         selectedGroup = selectedGroup + 1
+            if event.type == MOUSEBUTTONDOWN:
+                do_edit_action( level, event )
 
         screen.fill( background_color )
         if edit_mode:

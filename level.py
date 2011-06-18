@@ -3,10 +3,6 @@ from cPickle import dump, load
 
 TOLERANCE = 4   #px
 
-def make_replacer( a, b ):
-    def f(x): return b if a == x else x
-    return f
-
 class Level:
     def __init__( self ):
         self.verts = [ (200,200), (400,200), (400,400), 
@@ -72,10 +68,11 @@ class Level:
         v = self.vertex_at( x, y )
         if v == None:
             return
-      
-        u = len(self.verts) - 1 
-        rep = replacer( u, v ) 
+
+        u = len(self.verts) - 1
+        rep = lambda x: v if x == u else x
         self.polys = [[rep(x) for x in p if x != v] for p in self.polys]
+        self.verts[v] = self.verts[-1]
         del self.verts[-1]
 
         # collect polys which have become degenerate
