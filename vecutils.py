@@ -17,3 +17,6 @@ def dot( p, q ):
     x,y = p
     u,v = q
     return x * u + y * v
+
+def intvec( p ):
+    return int(p[0]), int(p[1])

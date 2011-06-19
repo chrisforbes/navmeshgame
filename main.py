@@ -9,6 +9,7 @@ from pygame.draw import circle, line
 
 from level import Level
 from dude import Dude
+from vecutils import *
 import meshutils
 
 background_color = 80, 80, 80
@@ -118,10 +119,12 @@ def main():
             # show movement plan
             fp = level.get_firing_position_near( mx, my )
             if fp != None:
-                fx, fy = int(fp['pos'][0]), int(fp['pos'][1])
-                circle( screen, (200, 150, 0), (fx, fy), 10, 1 )
-
-                path = level.get_path( (300,300), (fx,fy) )
+                # lead dude
+                f = intvec( fp['pos'] )
+                circle( screen, (200, 150, 0), f, 10, 1 )
+                # TODO: trailing dudes.
+                # TODO: show path from dude pos, not hardcoded hack
+                path = level.get_path( (300,300), f )
                 draw_path( screen, path )
 
         pygame.display.flip()
