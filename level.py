@@ -47,16 +47,17 @@ class Level:
                 last = v
             glEnd()
 
-        self._external_edges = [ e for e,count in edges.items() if count==2 ]
+        self._internal_edges = [ e for e,count in edges.items() if count==2 ]
+        self._external_edges = [ e for e,count in edges.items() if count==1 ]
 
         glBegin(GL_LINES)
         if debug:
-            for v1, v2 in self._external_edges:
+            for v1, v2 in self._internal_edges:
                 glColor3b(*self.colors[1])
                 glVertex2f(*self.verts[v1])
                 glVertex2f(*self.verts[v2])
 
-        for v1, v2 in [ e for e,count in edges.items() if count==1 ]:
+        for v1, v2 in self._external_edges:
             glColor3b(*self.colors[2])
             glVertex2f(*self.verts[v1])
             glVertex2f(*self.verts[v2])
