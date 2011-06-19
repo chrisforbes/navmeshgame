@@ -7,12 +7,16 @@ from pygame.locals import (QUIT, KEYDOWN,
 from pygame.font import Font
 from pygame.draw import circle, line
 
+from OpenGL.GL import *
+from OpenGL.GLU import gluOrtho2D 
+
 from level import Level
 from dude import Dude
 from vecutils import *
+from glcircle import GLSolidCircle, GLCircle
 import meshutils
 
-background_color = 80, 80, 80
+background_color = 0.2, 0.2, 0.2
 poly = None
 
 def snap(x):
@@ -42,9 +46,17 @@ def do_edit_action( level, event ):
 def main():
     pygame.init()
     edit_mode = False
-    screen = pygame.display.set_mode((800, 600))
-    font = Font(None, 24)
-    text = font.render("Edit Mode", 1, (255,255,255))
+    width = 800
+    height = 600
+    screen = pygame.display.set_mode((width, height), pygame.OPENGL|pygame.DOUBLEBUF)
+    vertex_circle = GLSolidCircle(4)
+    fp_circle = GLCircle(10)
+
+    glClearColor(background_color[0], background_color[1], background_color[2], 1.0)
+
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    gluOrtho2D(0.0, width, height, 0.0)
 
     level = Level()
     groups = [
@@ -58,11 +70,17 @@ def main():
     sel_dude = 0
     mx, my = 0, 0
 
+    path_list = glGenLists(1)
+
     def validate_sel_dude(x,z):
         n = len( groups[ sel_group ][ 'dudes' ] )
         return x if x < n else z
 
     while True:
+        glClear(GL_COLOR_BUFFER_BIT)
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 return
@@ -98,9 +116,9 @@ def main():
             if event.type == MOUSEMOTION:
                 mx, my = event.pos
 
-        screen.fill( background_color )
         if edit_mode:
-            screen.blit(text, text.get_rect())
+            pass
+            #screen.blit(text, text.get_rect())
 
         # draw
         level.draw( screen, edit_mode )
@@ -114,17 +132,17 @@ def main():
         if edit_mode:
             v = level.vertex_at( mx, my )
             if v != None:
-                circle( screen, (0,0,255), level.verts[v], 4, 0 )
+                vertex_circle.draw(level.verts[v], (0.0, 0.0, 1.0))
         else:
             # show movement plan
             fp = level.get_firing_position_near( mx, my )
             if fp != None:
                 for i, dude in enumerate(groups[sel_group]['dudes']):
                     f = intvec( get_position_for( fp, i ) )
-                    color = (200,150,0) if i == 0 else (110,70,0)
-                    circle( screen, color, f, 10, 1 )
+                    color = (0.78, 0.59, 0.0) if i == 0 else (0.43, 0.27, 0.0)
+                    fp_circle.draw( f, color )
                     path = level.get_path( dude.pos, f )
-                    draw_path( screen, path )
+                    draw_path( path, path_list )
 
         pygame.display.flip()
 
@@ -137,10 +155,18 @@ def get_position_for( fp, n ):
     return (fx + FORMATION_SPACING * n * tx,
             fy + FORMATION_SPACING * n * ty)
 
-def draw_path( screen, path ):
+def draw_path( path, path_list ):
+    glNewList(path_list, GL_COMPILE)
+    glBegin(GL_LINES)
     q = path[0]
     for p in path[1:]:
-        line( screen, (200,150,0), q, p, 1 )
+        glColor(0.78, 0.59, 0)
+        glVertex2f(*q)
+        glVertex2f(*p)
+
+    glEnd()
+    glEndList()
+    glCallList(path_list)
 
 if __name__ == '__main__':
     main()

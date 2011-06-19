@@ -1,9 +1,11 @@
 from math import sin, cos
 from pygame.draw import circle, line
+from glcircle import GLCircle
+from OpenGL.GL import *
 
 dude_types = [ 
-    [ (160, 0, 0), (110, 60, 60), (140, 40, 40) ],
-    [ (0, 160, 0), (60, 90, 60), (40, 110, 40) ],
+    [ (0.62, 0.0, 0.0), (0.42, 0.23, 0.23), (0.54, 0.15, 0.15) ],
+    [ (0.0, 0.62, 0.0), (0.23, 0.35, 0.23), (0.15, 0.43, 0.15) ],
 ]
 
 class Dude:
@@ -13,14 +15,14 @@ class Dude:
         self.angle = angle
 
     def draw( self, screen, sel_level):
-        p = self.pos
-        q = ( p[0] + 15 * cos(self.angle), p[1] + 15 * sin(self.angle) )
-
-        if sel_level > 0:
-            sel_color = dude_types[ self.t ][ sel_level ]
-            circle( screen, sel_color, p, 10+1, 3 )
-            line( screen, sel_color, p, q, 3 )
-
-        normal_color = dude_types[ self.t ][ 0 ]
-        circle( screen, normal_color, p, 10, 1 )
-        line( screen, normal_color, p, q, 1 )
+        dude_circle = GLCircle(10)
+        dude_circle.draw(self.pos, dude_types[self.t][sel_level])
+        line_list = glGenLists(1)
+        glNewList(line_list, GL_COMPILE)
+        glBegin(GL_LINES)
+        glColor(*dude_types[self.t][sel_level])
+        glVertex2f(*self.pos)
+        glVertex2f(self.pos[0] + 15 * cos(self.angle), self.pos[1] + 15 * sin(self.angle))
+        glEnd()
+        glEndList()
+        glCallList(line_list)
