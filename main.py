@@ -119,7 +119,6 @@ def main():
             # show movement plan
             fp = level.get_firing_position_near( mx, my )
             if fp != None:
-                # lead dude
                 for i, dude in enumerate(groups[sel_group]['dudes']):
                     f = intvec( get_position_for( fp, i ) )
                     color = (200,150,0) if i == 0 else (110,70,0)
