@@ -120,14 +120,26 @@ def main():
             fp = level.get_firing_position_near( mx, my )
             if fp != None:
                 # lead dude
-                f = intvec( fp['pos'] )
+                f = intvec( get_position_for( fp, 0 ) )
                 circle( screen, (200, 150, 0), f, 10, 1 )
                 # TODO: trailing dudes.
+                f2 = intvec( get_position_for( fp, 1 ) )
+                circle( screen, (140, 100, 0), f2, 10, 1 )
+
                 dp = groups[sel_group]['dudes'][sel_dude].pos
                 path = level.get_path( dp, f )
                 draw_path( screen, path )
 
         pygame.display.flip()
+
+FORMATION_SPACING = 25
+def get_position_for( fp, n ):
+    fx, fy = fp['pos']
+    tx, ty = fp['tangent']
+    if fp['t'] > 0.5:
+        tx, ty = -tx, -ty
+    return (fx + FORMATION_SPACING * n * tx,
+            fy + FORMATION_SPACING * n * ty)
 
 def draw_path( screen, path ):
     q = path[0]
