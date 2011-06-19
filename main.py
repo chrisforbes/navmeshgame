@@ -5,7 +5,7 @@ from pygame.locals import (QUIT, KEYDOWN,
     MOUSEBUTTONDOWN, MOUSEMOTION,
     K_e, K_TAB, K_s, K_l, K_a, K_d, K_w)
 from pygame.font import Font
-from pygame.draw import circle
+from pygame.draw import circle, line
 
 from level import Level
 from dude import Dude
@@ -115,12 +115,21 @@ def main():
             if v != None:
                 circle( screen, (0,0,255), level.verts[v], 4, 0 )
         else:
+            # show movement plan
             fp = level.get_firing_position_near( mx, my )
             if fp != None:
                 fx, fy = int(fp['pos'][0]), int(fp['pos'][1])
                 circle( screen, (200, 150, 0), (fx, fy), 10, 1 )
 
+                path = level.get_path( (300,300), (fx,fy) )
+                draw_path( screen, path )
+
         pygame.display.flip()
+
+def draw_path( screen, path ):
+    q = path[0]
+    for p in path[1:]:
+        line( screen, (200,150,0), q, p, 1 )
 
 if __name__ == '__main__':
     main()

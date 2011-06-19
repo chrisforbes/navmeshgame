@@ -85,3 +85,7 @@ class Level:
                              'norm': (dx, dy) }
 
         return None
+
+    def get_path( self, p, q ):
+        # TODO: actually do some pathing on the mesh! 
+        return [ p, q ]
