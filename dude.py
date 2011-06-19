@@ -8,14 +8,13 @@ dude_types = [
 
 class Dude:
     def __init__( self, x, y, t, angle=0.0 ):
-        self.x = x
-        self.y = y
+        self.pos = x,y
         self.t = t
         self.angle = angle
 
     def draw( self, screen, sel_level):
-        p = ( self.x, self.y )
-        q = ( self.x + 15 * cos(self.angle), self.y + 15 * sin(self.angle) )
+        p = self.pos
+        q = ( p[0] + 15 * cos(self.angle), p[1] + 15 * sin(self.angle) )
 
         if sel_level > 0:
             sel_color = dude_types[ self.t ][ sel_level ]

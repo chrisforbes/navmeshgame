@@ -123,8 +123,8 @@ def main():
                 f = intvec( fp['pos'] )
                 circle( screen, (200, 150, 0), f, 10, 1 )
                 # TODO: trailing dudes.
-                # TODO: show path from dude pos, not hardcoded hack
-                path = level.get_path( (300,300), f )
+                dp = groups[sel_group]['dudes'][sel_dude].pos
+                path = level.get_path( dp, f )
                 draw_path( screen, path )
 
         pygame.display.flip()
