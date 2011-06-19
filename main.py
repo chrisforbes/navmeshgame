@@ -16,7 +16,7 @@ from vecutils import *
 from glcircle import GLSolidCircle, GLCircle
 import meshutils
 
-background_color = 0.2, 0.2, 0.2
+background_color = 0.2, 0.2, 0.2, 1.0
 poly = None
 
 def snap(x):
@@ -52,7 +52,7 @@ def main():
     vertex_circle = GLSolidCircle(4)
     fp_circle = GLCircle(10)
 
-    glClearColor(background_color[0], background_color[1], background_color[2], 1.0)
+    glClearColor(*background_color)
 
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
