@@ -13,16 +13,16 @@ class Dude:
         self.pos = x,y
         self.t = t
         self.angle = angle
+        self.dude_circle = GLCircle(10)
+        self.line_list = glGenLists(1)
 
     def draw( self, screen, sel_level):
-        dude_circle = GLCircle(10)
-        dude_circle.draw(self.pos, dude_types[self.t][sel_level])
-        line_list = glGenLists(1)
-        glNewList(line_list, GL_COMPILE)
+        self.dude_circle.draw(self.pos, dude_types[self.t][sel_level])
+        glNewList(self.line_list, GL_COMPILE)
         glBegin(GL_LINES)
         glColor(*dude_types[self.t][sel_level])
         glVertex2f(*self.pos)
         glVertex2f(self.pos[0] + 15 * cos(self.angle), self.pos[1] + 15 * sin(self.angle))
         glEnd()
         glEndList()
-        glCallList(line_list)
+        glCallList(self.line_list)
