@@ -77,6 +77,7 @@ def main():
         return x if x < n else z
 
     while True:
+    	global poly
         glClear(GL_COLOR_BUFFER_BIT)
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
@@ -87,7 +88,6 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == K_e:
                     edit_mode = not edit_mode
-                    global poly
                     if poly != None and len(level.polys[poly]) < 3:
                     	level.del_poly(poly)
                     	poly = None
@@ -101,7 +101,6 @@ def main():
                     if event.key == K_s:
                         level.save_file( 'level.dat' )
                     if event.key == K_l:
-                        global poly
                         poly = None
                         level.load_file('level.dat')
 
