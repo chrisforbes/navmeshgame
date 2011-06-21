@@ -87,6 +87,10 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == K_e:
                     edit_mode = not edit_mode
+                    global poly
+                    if poly != None and len(level.polys[poly]) < 3:
+                    	level.del_poly(poly)
+                    	poly = None
 
                 elif event.key == K_TAB:
                     sel_group = (sel_group + 1) % len(groups)
