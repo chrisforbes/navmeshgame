@@ -4,7 +4,6 @@ import pygame
 from pygame.locals import (QUIT, KEYDOWN,
     MOUSEBUTTONDOWN, MOUSEMOTION,
     K_e, K_TAB, K_s, K_l, K_a, K_d, K_w)
-from pygame.font import Font
 from pygame.draw import circle, line
 
 from OpenGL.GL import *
