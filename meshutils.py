@@ -36,7 +36,7 @@ def new_poly( self, v ):
     return len(self.polys) - 1
 
 def add_to_poly( self, p, v ):
-    if v == self.polys[0]:
+    if v == self.polys[p][0]:
         return True
     elif v in self.polys[p]:
         return False            # already in the poly, but not the start vert
