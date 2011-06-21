@@ -141,6 +141,14 @@ def main():
                 vertex_circle.draw(level.verts[v], (0.0, 0.0, 1.0))
             if poly:
             	marker_circle.draw(level.verts[level.polys[poly][0]], (1.0, 0.0, 0.0))
+            	v = level.verts[level.polys[poly][-1]]
+            	glBegin(GL_LINES)
+            	glColor((0.9, 0.9, 0.9))
+            	glVertex2f(mx,my)
+            	glVertex2f(*v)
+            	glEnd()
+            	
+            	
         else:
             # show movement plan
             # todo: get this crap out of the renderer
