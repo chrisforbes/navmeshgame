@@ -159,11 +159,11 @@ def main():
                     color = (0.78, 0.59, 0.0) if i == 0 else (0.43, 0.27, 0.0)
                     fp_circle.draw( f, color )
                     path = level.get_path( dude.pos, f )
-                    dude.set_possible_path( path )
+                    dude.set_possible_orders( path )
                     draw_path( path, path_list )
             else:
                 for dude in groups[sel_group]['dudes']:
-                    dude.set_possible_path( None )
+                    dude.set_possible_orders( None )
 
         pygame.display.flip()
 
