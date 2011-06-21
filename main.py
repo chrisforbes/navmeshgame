@@ -110,9 +110,12 @@ def main():
                 elif event.key == K_d:
                     sel_dude = validate_sel_dude( 3, sel_dude )
 
-            if event.type == MOUSEBUTTONDOWN:
+            if event.type == MOUSEBUTTONDOWN:      
                 if edit_mode:
                     do_edit_action( level, event )
+                elif event.button == 1:
+                    for dude in groups[sel_group]['dudes']:
+                        dude.issue_orders()
             if event.type == MOUSEMOTION:
                 mx, my = event.pos
 
@@ -137,6 +140,7 @@ def main():
             	marker_circle.draw(level.verts[level.polys[poly][0]], (1.0, 0.0, 0.0))
         else:
             # show movement plan
+            # todo: get this crap out of the renderer
             fp = level.get_firing_position_near( mx, my )
             if fp != None:
                 for i, dude in enumerate(groups[sel_group]['dudes']):
@@ -144,7 +148,11 @@ def main():
                     color = (0.78, 0.59, 0.0) if i == 0 else (0.43, 0.27, 0.0)
                     fp_circle.draw( f, color )
                     path = level.get_path( dude.pos, f )
+                    dude.set_possible_path( path )
                     draw_path( path, path_list )
+            else:
+                for dude in groups[sel_group]['dudes']:
+                    dude.set_possible_path( None )
 
         pygame.display.flip()
 

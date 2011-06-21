@@ -15,6 +15,8 @@ class Dude:
         self.angle = angle
         self.dude_circle = GLCircle(10)
         self.line_list = glGenLists(1)
+        self.path = []
+        self.possible_path = []    
 
     def draw( self, screen, sel_level):
         self.dude_circle.draw(self.pos, dude_types[self.t][sel_level])
@@ -26,3 +28,11 @@ class Dude:
         glEnd()
         glEndList()
         glCallList(self.line_list)
+
+    def set_possible_orders( self, path ):
+        self.possible_path = path
+
+    def issue_orders( self ):
+        if self.possible_path:
+            self.path = self.possible_path
+            # todo: state machine transitions
