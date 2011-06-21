@@ -70,8 +70,6 @@ def main():
     sel_dude = 0
     mx, my = 0, 0
 
-    path_list = glGenLists(1)
-
     def validate_sel_dude(x,z):
         n = len( groups[ sel_group ][ 'dudes' ] )
         return x if x < n else z
@@ -160,7 +158,7 @@ def main():
                     fp_circle.draw( f, color )
                     path = level.get_path( dude.pos, f )
                     dude.set_possible_orders( path )
-                    draw_path( path, path_list )
+                    draw_path( path )
             else:
                 for dude in groups[sel_group]['dudes']:
                     dude.set_possible_orders( None )
@@ -176,18 +174,14 @@ def get_position_for( fp, n ):
     return (fx + FORMATION_SPACING * n * tx,
             fy + FORMATION_SPACING * n * ty)
 
-def draw_path( path, path_list ):
-    glNewList(path_list, GL_COMPILE)
+def draw_path( path ):
     glBegin(GL_LINES)
     q = path[0]
     for p in path[1:]:
         glColor(0.78, 0.59, 0)
         glVertex2f(*q)
         glVertex2f(*p)
-
     glEnd()
-    glEndList()
-    glCallList(path_list)
 
 if __name__ == '__main__':
     main()
