@@ -50,6 +50,7 @@ def main():
     screen = pygame.display.set_mode((width, height), pygame.OPENGL|pygame.DOUBLEBUF)
     vertex_circle = GLSolidCircle(4)
     fp_circle = GLCircle(10)
+    marker_circle = GLSolidCircle(3)
 
     glClearColor(*background_color)
 
@@ -132,6 +133,8 @@ def main():
             v = level.vertex_at( mx, my )
             if v != None:
                 vertex_circle.draw(level.verts[v], (0.0, 0.0, 1.0))
+            if poly:
+            	marker_circle.draw(level.verts[level.polys[poly][0]], (1.0, 0.0, 0.0))
         else:
             # show movement plan
             fp = level.get_firing_position_near( mx, my )
