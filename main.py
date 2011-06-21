@@ -14,6 +14,7 @@ from dude import Dude
 from vecutils import *
 from glcircle import GLSolidCircle, GLCircle
 import meshutils
+import editorutils
 
 background_color = 0.2, 0.2, 0.2, 1.0
 poly = None
@@ -134,18 +135,9 @@ def main():
                 dude.draw( screen, sel_level )
 
         if edit_mode:
-            v = level.vertex_at( mx, my )
-            if v != None:
-                vertex_circle.draw(level.verts[v], (0.0, 0.0, 1.0))
-            if poly:
-            	marker_circle.draw(level.verts[level.polys[poly][0]], (1.0, 0.0, 0.0))
-            	v = level.verts[level.polys[poly][-1]]
-            	glBegin(GL_LINES)
-            	glColor((0.9, 0.9, 0.9))
-            	glVertex2f(mx,my)
-            	glVertex2f(*v)
-            	glEnd()
-            	
+        	level.draw_vertex_circle( mx, my , vertex_circle)
+        	level.draw_poly_vertex( poly, marker_circle )
+        	level.draw_guide_line( poly, mx, my )
             	
         else:
             # show movement plan
